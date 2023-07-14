@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "absensi_skatel2_mobile",
+    "name": "Absensi",
     "slug": "absensi_skatel2_mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash_skatel2.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
