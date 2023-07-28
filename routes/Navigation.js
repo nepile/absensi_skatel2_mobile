@@ -53,7 +53,11 @@ export default function Routes() {
                 elevation: 5,
               }}
             >
-              <Tab.Screen name="Home" component={Home} />
+              <Tab.Screen
+                name="Home"
+                component={Home}
+                options={{ headerShown: false }}
+              />
               <Tab.Screen name="Report" component={Report} />
               <Tab.Screen name="Profile" component={Profile} />
             </Tab.Navigator>
