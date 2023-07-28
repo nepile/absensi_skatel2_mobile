@@ -1,8 +1,6 @@
 import React from "react";
 import { StyleSheet, Dimensions } from "react-native";
-
-const _width = Dimensions.get("screen").width;
-const _height = Dimensions.get("screen").height;
+import { _width } from "../../utils/Dimenssion";
 
 export const styles = StyleSheet.create({
   gmapContainer: {
