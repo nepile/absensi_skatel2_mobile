@@ -4,14 +4,13 @@ import { styles } from "../../assets/styles/HomeStyle";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Home({ navigation }) {
-  const [token, setToken] = useState("");
-  useEffect(() => {
-    AsyncStorage.getItem("token").then((value) => {
-      setToken(value);
-    });
-  });
-
+// const [token, setToken] = useState("");
+// useEffect(() => {
+//   AsyncStorage.getItem("token").then((value) => {
+//     setToken(value);
+//   });
+// });
+export default function Home() {
   return (
     <SafeAreaView>
       <ScrollView>
