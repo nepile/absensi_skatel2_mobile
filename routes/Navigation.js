@@ -18,7 +18,7 @@ const Tab = createBottomTabNavigator();
 export default function Routes() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Login">
         {/* Stack screen for default access if login success */}
         <Stack.Screen name="Home" options={{ headerShown: false }}>
           {() => (

@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity, Image, ScrollView } from "react-native";
 import { styles } from "../../assets/styles/HomeStyle";
 import { SafeAreaView } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Home({ navigation }) {
+  const [token, setToken] = useState("");
+  useEffect(() => {
+    AsyncStorage.getItem("token").then((value) => {
+      setToken(value);
+    });
+  });
+
   return (
     <SafeAreaView>
       <ScrollView>
@@ -16,7 +24,7 @@ export default function Home({ navigation }) {
 
         <View style={styles.disclaimer}>
           <Text style={{ textAlign: "center" }}>
-            Presensi Hanya Dapat Dilakukan Di lingkungan SMK Telkom 2 Medan
+            Presensi Hanya Dapat Dilakukan Di lingkungan SMK Telkom 2 Medan{" "}
           </Text>
         </View>
 
