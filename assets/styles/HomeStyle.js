@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
   gmapContainer: {
     height: 300,
     width: _width,
-    backgroundColor: "red",
+    backgroundColor: "gray",
   },
   gmap: {
     width: _width,
