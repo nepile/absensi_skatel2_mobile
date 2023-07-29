@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, ScrollView, Image, TouchableOpacity } from "react-native";
 import { styles } from "../../assets/styles/ProfileStyle";
 import { SafeAreaView } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Profile({ navigation }) {
+  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const [kelas, setKelas] = useState("");
+
+  useEffect(() => {
+    AsyncStorage.getItem("user").then((value) => {
+      const user = JSON.parse(value);
+      if (user !== null) {
+        setUsername(user.username);
+        setName(user.name);
+        setKelas(user.class);
+      }
+    });
+  });
+
   return (
     <SafeAreaView>
       <ScrollView>
@@ -15,19 +31,22 @@ export default function Profile({ navigation }) {
             />
           </View>
           <View style={styles.detailProfil}>
-            <Text style={styles.textProfil}>5427126</Text>
+            <Text style={styles.textProfil}>{username}</Text>
           </View>
           <View style={styles.detailProfil}>
             <Text style={[styles.textProfil, { color: "#AF1F22" }]}>
-              John Doe
+              {name}
             </Text>
           </View>
           <View style={styles.detailProfil}>
-            <Text style={styles.textProfil}>XI RPL 1</Text>
+            <Text style={styles.textProfil}>{kelas}</Text>
           </View>
 
-          <TouchableOpacity style={styles.btnRedirect}>
-            <Text style={styles.txtBtn}>Ganti Password</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Update Password")}
+            style={styles.btnRedirect}
+          >
+            <Text style={styles.txtBtn}>Update Password</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

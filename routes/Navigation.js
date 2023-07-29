@@ -10,6 +10,7 @@ import Login from "../views/auth/Login";
 import Home from "../views/core/Home";
 import Report from "../views/core/Report";
 import Profile from "../views/core/Profile";
+import UpdatePassword from "../views/modules/profile/UpdatePassword";
 
 // stack and tab navigator
 const Stack = createStackNavigator();
@@ -63,6 +64,8 @@ export default function Routes() {
             </Tab.Navigator>
           )}
         </Stack.Screen>
+        {/* Stack screen for update password view */}
+        <Stack.Screen name="Update Password" component={UpdatePassword} />
 
         {/* Stack screen for login view */}
         <Stack.Screen

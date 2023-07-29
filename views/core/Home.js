@@ -96,7 +96,7 @@ export default function Home() {
               />
             </MapView>
           ) : (
-            <Text>OKE</Text>
+            <Text style={{ color: "#fff" }}>Koneksi Map Bermasalah</Text>
           )}
         </View>
 
