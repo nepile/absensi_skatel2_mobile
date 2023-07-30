@@ -1,44 +1,12 @@
 import React, { useState } from "react";
-import {
-  Text,
-  View,
-  Image,
-  TextInput,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import { Text, View, Image, TextInput, TouchableOpacity } from "react-native";
 import { styles } from "../../assets/styles/LoginStyle";
 import { SafeAreaView } from "react-native-safe-area-context";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import HandleLogin from "../../api/HandleLogin";
 
 export default function Login({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const login = async () => {
-    try {
-      const response = await axios.post(
-        "http://192.168.43.219:19001/api/login",
-        {
-          username: username,
-          password: password,
-        }
-      );
-
-      const data = response.data;
-
-      if (response.status === 200) {
-        AsyncStorage.setItem("token", data.token);
-        AsyncStorage.setItem("user", JSON.stringify(data.data));
-        navigation.replace("Home");
-      }
-    } catch (error) {
-      if (error.response) {
-        Alert.alert("Perhatian", error.response.data.message);
-      }
-    }
-  };
 
   return (
     <SafeAreaView>
@@ -64,7 +32,10 @@ export default function Login({ navigation }) {
             onChangeText={setPassword}
             secureTextEntry
           />
-          <TouchableOpacity onPress={login} style={styles.btnLogin}>
+          <TouchableOpacity
+            onPress={() => HandleLogin(username, password, navigation)}
+            style={styles.btnLogin}
+          >
             <Text style={styles.textBtn}>Login</Text>
           </TouchableOpacity>
         </View>

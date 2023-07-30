@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity, Switch } from "react-native";
 import { styles } from "../../../assets/styles/UpdatePasswordStyle";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Alert } from "react-native";
+import HandleUpdatePassword from "../../../api/HandleUpdatePassword";
 
 export default function UpdatePassword({ navigation }) {
-  const [userId, setUserId] = useState("");
-  const [token, setToken] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [retypePassword, setRetypePassword] = useState("");
@@ -15,49 +11,6 @@ export default function UpdatePassword({ navigation }) {
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
-  };
-
-  useEffect(() => {
-    // get user id
-    AsyncStorage.getItem("user").then((value) => {
-      const user = JSON.parse(value);
-      if (user !== null) {
-        setUserId(user.user_id);
-      }
-    });
-
-    // get token
-    AsyncStorage.getItem("token").then((value) => {
-      setToken(value);
-    });
-  }, []); // Empty dependency array to run the effect only once
-
-  const changePassword = async () => {
-    try {
-      const response = await axios.post(
-        "http://192.168.43.219:19001/api/change-password",
-        {
-          userId: userId,
-          oldPassword: oldPassword,
-          newPassword: newPassword,
-          retypePassword: retypePassword,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        navigation.navigate("Profile");
-        Alert.alert("Info", response.data.message);
-      }
-    } catch (error) {
-      if (error.response) {
-        Alert.alert("Perhatian", error.response.data.message);
-      }
-    }
   };
 
   return (
@@ -97,7 +50,17 @@ export default function UpdatePassword({ navigation }) {
         <Text>{showPassword ? "Hide Password" : "Show Password"}</Text>
       </View>
 
-      <TouchableOpacity style={styles.btn} onPress={changePassword}>
+      <TouchableOpacity
+        style={styles.btn}
+        onPress={() =>
+          HandleUpdatePassword(
+            oldPassword,
+            newPassword,
+            retypePassword,
+            navigation
+          )
+        }
+      >
         <Text style={styles.txtBtn}>Change Password</Text>
       </TouchableOpacity>
     </View>
