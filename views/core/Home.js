@@ -1,22 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, TouchableOpacity, Image, ScrollView } from "react-native";
+import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 import { styles } from "../../assets/styles/HomeStyle";
 import { SafeAreaView } from "react-native-safe-area-context";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
+import HandlePresensi from "../../api/HandlePresensi";
 
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
-  const p = 0.017453292519943295; // Math.PI / 180
+  const p = 0.017453292519943295;
   const c = Math.cos;
   const a =
     0.5 -
     c((lat2 - lat1) * p) / 2 +
     (c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p))) / 2;
-  return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+  return 12742 * Math.asin(Math.sqrt(a));
 };
 
-export default function Home() {
+export default function Home({ navigation }) {
+  const categoryMasuk = "masuk";
+  const categoryKeluar = "keluar";
   const [showMap, setShowMap] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
 
@@ -71,7 +73,11 @@ export default function Home() {
     : null;
 
   const isWithinTolerance = (distance) => {
-    return distance !== null && distance <= 0.2; // 0.2 kilometers = 200 meters
+    return distance !== null && distance <= 0.2;
+  };
+
+  const handleMapRefresh = () => {
+    getCurrentLocation();
   };
 
   return (
@@ -100,9 +106,16 @@ export default function Home() {
           )}
         </View>
 
+        <TouchableOpacity
+          style={styles.refreshButton}
+          onPress={handleMapRefresh}
+        >
+          <Text style={styles.refreshButtonText}>Refresh Map</Text>
+        </TouchableOpacity>
+
         <View style={styles.disclaimer}>
           <Text style={{ textAlign: "center" }}>
-            Presensi Hanya Dapat Dilakukan Di lingkungan SMK Telkom 2 Medan{" "}
+            Presensi Hanya Dapat Dilakukan Di lingkungan SMK Telkom 2 Medan
           </Text>
         </View>
 
@@ -116,6 +129,7 @@ export default function Home() {
               },
             ]}
             disabled={!isWithinTolerance(distanceToReference)}
+            onPress={() => HandlePresensi(categoryMasuk, navigation)}
           >
             <Text style={styles.btnText}>Masuk</Text>
           </TouchableOpacity>
@@ -128,6 +142,7 @@ export default function Home() {
               },
             ]}
             disabled={!isWithinTolerance(distanceToReference)}
+            onPress={() => HandlePresensi(categoryKeluar, navigation)}
           >
             <Text style={styles.btnText}>Pulang</Text>
           </TouchableOpacity>

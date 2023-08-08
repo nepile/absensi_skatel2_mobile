@@ -10,17 +10,20 @@ const HandleUpdatePassword = async (
   navigation
 ) => {
   try {
+    const userId = await getUserId(); // Call getUserId to get the actual value
+    const token = await getToken(); // Call getToken to get the actual value
+
     const response = await axios.post(
-      `${updtPasswordApi}`,
+      updtPasswordApi,
       {
-        userId: getUserId,
+        userId: userId,
         oldPassword: oldPassword,
         newPassword: newPassword,
         retypePassword: retypePassword,
       },
       {
         headers: {
-          Authorization: `Bearer ${getToken}`,
+          Authorization: `Bearer ${token}`,
         },
       }
     );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -17,9 +17,26 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function Routes() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
+
+  const checkLoginStatus = async () => {
+    const token = await AsyncStorage.getItem("token");
+    console.log("token", token);
+    console.log(isAuthenticated);
+    if (token) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+  };
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName={isAuthenticated ? "Home" : "Login"}>
         {/* Stack screen for default access if login success */}
         <Stack.Screen name="Home" options={{ headerShown: false }}>
           {() => (
@@ -64,6 +81,7 @@ export default function Routes() {
             </Tab.Navigator>
           )}
         </Stack.Screen>
+
         {/* Stack screen for update password view */}
         <Stack.Screen name="Update Password" component={UpdatePassword} />
 

@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from "react";
-
-const baseUrl = "http://192.168.43.219:19001/api/";
-const loginApi = `${baseUrl}login`;
-const updtPasswordApi = `${baseUrl}change-password`;
-
-export { loginApi, updtPasswordApi };
+const baseUrl = "https://0193-2404-c0-1c10-00-e7-4567.ngrok-free.app/api/";
+export const loginApi = `${baseUrl}login`;
+export const updtPasswordApi = `${baseUrl}change-password`;
+export const presensiApi = `${baseUrl}presensi`;
