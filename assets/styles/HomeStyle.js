@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   disclaimer: {
-    marginTop: "35%",
+    marginTop: "18%",
     marginBottom: "25%",
     marginHorizontal: "10%",
   },
@@ -37,5 +37,18 @@ export const styles = StyleSheet.create({
   btnText: {
     color: "#FFF",
     fontWeight: "bold",
+  },
+  refreshButton: {
+    backgroundColor: "gray",
+    marginTop: 20,
+    paddingHorizontal: 50,
+    paddingVertical: 15,
+    borderRadius: 10,
+    marginHorizontal: 10,
+  },
+  refreshButtonText: {
+    color: "#FFF",
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
