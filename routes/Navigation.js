@@ -11,6 +11,9 @@ import Home from "../views/core/Home";
 import Report from "../views/core/Report";
 import Profile from "../views/core/Profile";
 import UpdatePassword from "../views/modules/profile/UpdatePassword";
+import Today from "../views/modules/report/Today";
+import Recap from "../views/modules/report/Recap";
+import { getToken } from "../utils/Session";
 
 // stack and tab navigator
 const Stack = createStackNavigator();
@@ -24,9 +27,7 @@ export default function Routes() {
   }, []);
 
   const checkLoginStatus = async () => {
-    const token = await AsyncStorage.getItem("token");
-    console.log("token", token);
-    console.log(isAuthenticated);
+    const token = await getToken();
     if (token) {
       setIsAuthenticated(true);
     } else {
@@ -36,60 +37,73 @@ export default function Routes() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={isAuthenticated ? "Home" : "Login"}>
-        {/* Stack screen for default access if login success */}
-        <Stack.Screen name="Home" options={{ headerShown: false }}>
-          {() => (
-            <Tab.Navigator
-              screenOptions={({ route }) => ({
-                tabBarIcon: ({ focused, color, size }) => {
-                  let iconName;
-                  if (route.name === "Home") {
-                    iconName = focused ? "home" : "home";
-                  } else if (route.name === "Report") {
-                    iconName = focused ? "pie-chart" : "pie-chart";
-                  } else if (route.name === "Profile") {
-                    iconName = focused ? "user" : "user";
-                  }
-                  return <Icon name={iconName} size={size} color={color} />;
-                },
-              })}
-              tabBarOptions={{
-                activeTintColor: "crimson",
-                inactiveTintColor: "gray",
-              }}
-              tabBarStyle={{
-                backgroundColor: "#fff",
-                borderTopWidth: 0,
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: -2,
-                },
-                shadowOpacity: 0.2,
-                shadowRadius: 4,
-                elevation: 5,
-              }}
-            >
-              <Tab.Screen
-                name="Home"
-                component={Home}
-                options={{ headerShown: false }}
-              />
-              <Tab.Screen name="Report" component={Report} />
-              <Tab.Screen name="Profile" component={Profile} />
-            </Tab.Navigator>
-          )}
-        </Stack.Screen>
+      <Stack.Navigator>
+        {isAuthenticated ? (
+          <Stack.Screen name="Home" options={{ headerShown: false }}>
+            {() => (
+              <Tab.Navigator
+                screenOptions={({ route }) => ({
+                  tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
+                    if (route.name === "Home") {
+                      iconName = focused ? "home" : "home";
+                    } else if (route.name === "Report") {
+                      iconName = focused ? "pie-chart" : "pie-chart";
+                    } else if (route.name === "Profile") {
+                      iconName = focused ? "user" : "user";
+                    }
+                    return <Icon name={iconName} size={size} color={color} />;
+                  },
+                  tabBarActiveTintColor: "crimson",
+                  tabBarInactiveTintColor: "gray",
+                  tabBarStyle: {
+                    backgroundColor: "#fff",
+                    borderTopWidth: 0,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                      width: 0,
+                      height: -2,
+                    },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 4,
+                    elevation: 5,
+                  },
+                })}
+              >
+                <Tab.Screen
+                  name="Home"
+                  component={Home}
+                  options={{ headerShown: false }}
+                />
+                <Tab.Screen name="Report" component={Report} />
+                <Tab.Screen name="Profile" component={Profile} />
+              </Tab.Navigator>
+            )}
+          </Stack.Screen>
+        ) : (
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ title: null, headerShown: false }}
+          />
+        )}
 
-        {/* Stack screen for update password view */}
-        <Stack.Screen name="Update Password" component={UpdatePassword} />
-
-        {/* Stack screen for login view */}
         <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{ title: null, headerShown: false }}
+          name="Today"
+          component={Today}
+          options={{ title: "Presensi Hari Ini" }}
+        />
+
+        <Stack.Screen
+          name="Recap"
+          component={Recap}
+          options={{ title: "Rekapan Presensi Bulanan" }}
+        />
+
+        <Stack.Screen
+          name="Update Password"
+          component={UpdatePassword}
+          options={{ title: "Update Password" }}
         />
       </Stack.Navigator>
     </NavigationContainer>

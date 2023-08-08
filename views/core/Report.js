@@ -9,7 +9,10 @@ export default function Report({ navigation }) {
       <ScrollView>
         <View style={styles.cardContainer}>
           <View style={styles.card}>
-            <TouchableOpacity style={[styles.menu, { marginTop: 5 }]}>
+            <TouchableOpacity
+              style={[styles.menu, { marginTop: 5 }]}
+              onPress={() => navigation.navigate("Today")}
+            >
               <Text style={{ marginBottom: 10, fontSize: 17 }}>Hari ini</Text>
               <View style={{ width: 10, height: 10 }}>
                 <Image
@@ -22,9 +25,12 @@ export default function Report({ navigation }) {
                 />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.menu}>
+            <TouchableOpacity
+              style={styles.menu}
+              onPress={() => navigation.navigate("Recap")}
+            >
               <Text style={{ marginBottom: 10, fontSize: 17 }}>
-                Rekapan Presensi
+                Rekapan Bulanan Presensi
               </Text>
               <View style={{ width: 10, height: 10 }}>
                 <Image
