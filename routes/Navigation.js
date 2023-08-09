@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 // views
@@ -13,17 +13,18 @@ import Profile from "../views/core/Profile";
 import UpdatePassword from "../views/modules/profile/UpdatePassword";
 import Today from "../views/modules/report/Today";
 import Recap from "../views/modules/report/Recap";
-import { getToken } from "../utils/Session";
+import { getRole, getToken } from "../utils/Session";
 
-// stack and tab navigator
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function Routes() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isRole, setRole] = useState(false);
 
   useEffect(() => {
     checkLoginStatus();
+    checkRoleStatus();
   }, []);
 
   const checkLoginStatus = async () => {
@@ -35,13 +36,26 @@ export default function Routes() {
     }
   };
 
+  const checkRoleStatus = async () => {
+    const role = await getRole();
+    console.log(isRole);
+    if (role == "User") {
+      setRole(true);
+      return true;
+    } else {
+      setRole(false);
+      return false;
+    }
+  };
+
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName={isAuthenticated ? "Home" : "Login"}>
         {isAuthenticated ? (
           <Stack.Screen name="Home" options={{ headerShown: false }}>
             {() => (
               <Tab.Navigator
+                initialRouteName={isRole ? "Report" : "Home"}
                 screenOptions={({ route }) => ({
                   tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
@@ -70,13 +84,13 @@ export default function Routes() {
                   },
                 })}
               >
-                <Tab.Screen
-                  name="Home"
-                  component={Home}
-                  options={{ headerShown: false }}
-                />
+                {isRole ? <Tab.Screen name="Home" component={Home} /> : null}
                 <Tab.Screen name="Report" component={Report} />
-                <Tab.Screen name="Profile" component={Profile} />
+                <Tab.Screen
+                  name="Profile"
+                  component={Profile}
+                  options={{ tabBarVisible: isRole }}
+                />
               </Tab.Navigator>
             )}
           </Stack.Screen>
@@ -87,19 +101,22 @@ export default function Routes() {
             options={{ title: null, headerShown: false }}
           />
         )}
-
+        {!isRole && (
+          <>
+            <Stack.Screen name="Report" component={Report} />
+            <Stack.Screen name="Profile" component={Profile} />
+          </>
+        )}
         <Stack.Screen
           name="Today"
           component={Today}
           options={{ title: "Presensi Hari Ini" }}
         />
-
         <Stack.Screen
           name="Recap"
           component={Recap}
           options={{ title: "Rekapan Presensi Bulanan" }}
         />
-
         <Stack.Screen
           name="Update Password"
           component={UpdatePassword}

@@ -15,6 +15,22 @@ export const getUserId = async () => {
   }
 };
 
+export const getRole = async () => {
+  try {
+    const value = await AsyncStorage.getItem("user");
+    const user = JSON.parse(value);
+    if (user !== null) {
+      const role = user.role;
+      console.log(role);
+      return role;
+    }
+    return null;
+  } catch (error) {
+    console.log("Error getting user role from session:", error);
+    return null;
+  }
+};
+
 export const getToken = async () => {
   try {
     const value = await AsyncStorage.getItem("token");

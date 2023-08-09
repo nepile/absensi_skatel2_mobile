@@ -4,7 +4,7 @@ import { _width } from "../../utils/Dimenssion";
 
 export const styles = StyleSheet.create({
   gmapContainer: {
-    height: 300,
+    height: 200,
     width: _width,
     backgroundColor: "gray",
   },

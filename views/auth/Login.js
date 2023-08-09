@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Text, View, Image, TextInput, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  Switch,
+} from "react-native";
 import { styles } from "../../assets/styles/LoginStyle";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HandleLogin from "../../api/HandleLogin";
@@ -7,6 +14,7 @@ import HandleLogin from "../../api/HandleLogin";
 export default function Login({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [asParent, setAsParent] = useState(false);
 
   return (
     <SafeAreaView>
@@ -32,8 +40,25 @@ export default function Login({ navigation }) {
             onChangeText={setPassword}
             secureTextEntry
           />
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginTop: 10,
+            }}
+          >
+            <Switch
+              value={asParent}
+              onValueChange={(newValue) => setAsParent(newValue)}
+              onChangeText={setAsParent}
+            />
+            <Text>Login as parent</Text>
+          </View>
+
           <TouchableOpacity
-            onPress={() => HandleLogin(username, password, navigation)}
+            onPress={() =>
+              HandleLogin(username, password, asParent, navigation)
+            } // Pass asParent to HandleLogin
             style={styles.btnLogin}
           >
             <Text style={styles.textBtn}>Login</Text>
