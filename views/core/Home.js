@@ -68,8 +68,8 @@ export default function Home({ navigation }) {
     ? calculateDistance(
         userLocation.latitude,
         userLocation.longitude,
-        3.567471,
-        98.625052
+        3.57239,
+        98.699212
       )
     : null;
 
