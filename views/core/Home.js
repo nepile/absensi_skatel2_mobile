@@ -63,12 +63,13 @@ export default function Home({ navigation }) {
     checkLocationPermissionsAndFetchLocation();
   }, []);
 
+  // Customize map and distance map
   const distanceToReference = userLocation
     ? calculateDistance(
         userLocation.latitude,
         userLocation.longitude,
-        3.4778351,
-        98.5944383
+        3.567471,
+        98.625052
       )
     : null;
 
