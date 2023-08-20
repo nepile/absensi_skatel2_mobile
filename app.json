@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Absensi",
-    "slug": "absensi_skatel2_mobile",
+    "name": "Preskatel2",
+    "slug": "preskatel2",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.nevillejr10.absensi_skatel2_mobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "42d7d54d-2686-45e0-b992-3e4dcfd5e061"
+      }
     }
   }
 }
