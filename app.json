@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Preskatel2",
+    "name": "Presensi SMK Telkom 2 Medan",
     "slug": "absensi_skatel2_mobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -25,7 +25,7 @@
       "package": "com.nevillejr10.absensi_skatel2_mobile"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon.png"
     },
     "extra": {
       "eas": {
